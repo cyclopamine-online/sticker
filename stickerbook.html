@@ -1,1 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>STICKERBOOK</title>
+
+  <link href="/style.css" rel="stylesheet" type="text/css" media="all">
+  <link rel="icon" type="image/x-icon" href="favicon.gif">
+</head>
+<body>
+
+<h1> STICKER BOOK! </h1> 
+
+
+
+<div class="box">
+   
+<div class="draggable">
+  <img src="image" class="drag-header" width="100px" height="auto">
+</div>
+  <!-- add more images by copying the above code, change out image -->
+
+
+
+</div>
+
+
+
+<button id="changeBackgroundBtn">Change Background</button>
+
+
+<style>
+
+ 
+.box {
+  width: 150px;
+  height: 150px;
+  background-color: white; 
+  border-width: 3px; 
+  border-style: dotted;
+  
+}
+ <!-- you can change the box to look like whatever, i just needed a container for the stickers-->
+
+
+body {
+  background: url(your first background) no-repeat center center fixed;
+  background-size: cover; 
+  max-width: 100%;
+  position: fixed; 
+}
+.draggable {
+  position: absolute;
+  z-index: 9;
+  background-color: none;
+  border: none;
+  text-align: center;
+}
+
+
+
+.drag-header {
+  padding: 10px;
+  cursor: move;
+  z-index: 10;
+  background-color: none;
+}
+  #changeBackgroundBtnContainer {
+      position: absolute;
+      bottom: 20px; 
+      text-align: center;
+      width: 100%;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #D8C9B0; 
+      font-family: 'Spirit';
+      
+    }
+</style>
+
+<script>
+//im not sure how good the js is not that good at js:
+makeDraggable(document.querySelectorAll('.draggable'));
+
+function makeDraggable(elements) {
+  elements.forEach(function(el) {
+    dragElement(el);
+  });
+}
+
+function dragElement(elmnt) {
+  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  if (elmnt.querySelector('.drag-header')) {
+  
+    elmnt.querySelector('.drag-header').onmousedown = dragMouseDown;
+  } else {
+  
+    elmnt.onmousedown = dragMouseDown;
+  }
+
+  function dragMouseDown(e) {
+    e = e || window.event;
+    e.preventDefault();
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onmouseup = closeDragElement;
+    document.onmousemove = elementDrag;
+  }
+
+  function elementDrag(e) {
+    e = e || window.event;
+    e.preventDefault();
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+  }
+
+  function closeDragElement() {
+    document.onmouseup = null;
+    document.onmousemove = null;
+  }
+}
+//change the images here to change the backgrounds:
+const backgrounds = ['/image1', '/image2', '/image3', '/image4'];
+let currentBackgroundIndex = 0;
+
+document.getElementById('changeBackgroundBtn').addEventListener('click', function() {
+  currentBackgroundIndex = (currentBackgroundIndex + 1) % backgrounds.length;
+  document.body.style.backgroundImage = `url('${backgrounds[currentBackgroundIndex]}')`;
+});
+
+
+
+</script>
+</body>
+</html>
 
